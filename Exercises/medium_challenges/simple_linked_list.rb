@@ -1,85 +1,70 @@
 class Element
-  attr_reader :datum, :list
-  def initialize(*input)
-    @list = input
-    #p datum
-    #@list = make_list
-  end
+  attr_accessor :datum, :element
 
-  # def make_list
-  #   list = Enumerator.new do |yielder|
-  #     @datum.each do |ea|
-  #       yielder << ea
-  #     end
-  #   end
-  # end
-
-  def datum
-    list[-1]
-  end
-
-  def next
-    list[1]
-
+  def initialize(datum, element=nil)
+    @datum = datum
+    @element = element
   end
 
   def tail?
-    list[-1]
+    element.nil?
+  end
+
+  def next
+    element
   end
 end
 
 class SimpleLinkedList
-  attr_accessor :list
+  attr_accessor :head
 
-  def initialize
-    @list = []
+  def push(datum)
+    element = Element.new(datum, head)
+    self.head = element
   end
 
-  def push(element)
-    list.push(Element.new(element))
-  end
-
-  def self.from_a(array) # convert to list
-    simple = new
-    array.each {|ea| simple.push(ea)}
-    simple
-  end
-
-  def to_a # convert to array
-
+  def size
+    size = 0
+    temp_head = head
+    while temp_head
+      size += 1
+      temp_head = temp_head.next
+    end
+    size
   end
 
   def empty?
-    list.empty?
-  end
-
-  def head # start of list
-    list[-1]
-  end
-
-  def size # size of list
-    list.size
+    true unless head
   end
 
   def peek
-    return nil if list.empty? # first item in list
-    list[-1].datum
+    head ? head.datum : nil
   end
 
   def pop
-    list.pop.datum
+    datum = peek
+    self.head = head.next
+    datum
   end
- 
+
+  def self.from_a(array)
+    list = SimpleLinkedList.new
+    array.reverse.each { |ea| list.push(ea) } if array
+    list
+  end
+
+  def to_a
+    array = []
+    temp_head = head
+    while temp_head
+      array << temp_head.datum
+      temp_head = temp_head.next
+    end
+    array
+  end
 
   def reverse
-
+    array = to_a.reverse
+    self.class.from_a(array)
   end
-
 end
-
-
-# list = Element.new('hey')
-# p list.datum
-
-#list = SimpleLinkedList.from_a((1..10).to_a)
-
