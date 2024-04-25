@@ -159,4 +159,18 @@ class TodoListTest < Minitest::Test
     @todo1.done!
     assert_equal([@todo1], @list.select {|todo| todo.done?}.to_a)
   end
+
+  def test_find_by_title
+    assert_equal @todo1, @list.find_by_title("Buy milk")
+  end
+
+  def test_all_done
+    @todo1.done!
+    assert_equal [@todo1], @list.all_done.to_a
+  end
+
+  def test_all_not_done
+    @todo1.done!
+    assert_equal [@todo2, @todo3], @list.all_not_done.to_a
+  end
 end
