@@ -1,9 +1,16 @@
+# def any?(array)
+#   return false if array.empty?
+#   array.each_with_index do |element, index|
+#     return true if yield(element)
+#     return false if array.size - 1 == index
+#   end
+# end
+
 def any?(array)
-  return false if array.empty?
-  array.each_with_index do |element, index|
-    return true if yield(element)
-    return false if array.size - 1 == index
+  array.each do |ea|
+    return true if yield(ea)
   end
+  false
 end
 
 p any?([1, 3, 5, 6]) { |value| value.even? } == true

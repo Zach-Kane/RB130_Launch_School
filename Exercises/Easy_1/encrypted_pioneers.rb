@@ -65,3 +65,37 @@ p decrypt("Zneiva Zvafxl")
 p decrypt("Lhxvuveb Zngfhzbgb")
 p decrypt("Unllvz Fybavzfxv")
 p decrypt("Tregehqr Oynapu")
+
+
+names = "Nqn Ybirynpr
+Tenpr Ubccre
+Nqryr Tbyqfgvar
+Nyna Ghevat
+Puneyrf Onoontr
+Noqhyynu Zhunzznq ova Zhfn ny-Xujnevmzv
+Wbua Ngnanfbss
+Ybvf Unvog
+Pynhqr Funaaba
+Fgrir Wbof
+Ovyy Tngrf
+Gvz Orearef-Yrr
+Fgrir Jbmavnx
+Xbaenq Mhfr
+Fve Nagbal Ubner
+Zneiva Zvafxl
+Lhxvuveb Zngfhzbgb
+Unllvz Fybavzfxv
+Tregehqr Oynapu"
+
+AZ = [*'a'..'z'] + [*'a'..'z'] + [*'A'..'Z'] + [*'A'..'Z']
+
+
+names = names.split('').map do |chr|
+  if AZ.any?(chr)
+    AZ[AZ.index(chr) + 13]
+  else
+    chr
+  end
+end
+
+puts names.join

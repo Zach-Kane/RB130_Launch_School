@@ -24,22 +24,21 @@ E       E
 
 =end
 
-def make_diamond(input)
-  letters = [*'A'..input]
-  space = letters.size
-  diamond = []
-  letters.each_with_index do |letter, index|
-    idx = index == 1 ? 1 : (index * 2) - 1
-    if index.zero?
-      diamond << "#{' ' * (space - 1)} A"
-    else
-      diamond << "#{' ' * space}#{letter}#{' ' * (idx)}#{letter}"
+class Diamond
+  def self.make_diamond(letter)
+    nums = [*'A'..letter]
+    size = nums.size
+    diamond = []
+    nums.each_with_index do |ea, idx|
+      if idx == 0
+        diamond << ((' ' * (size - 1)) + nums[0] + (' ' * (size - 1)))
+      else
+        diamond << ((' ' * (size - idx - 1)) + ea + (' ' * ((idx * 2) - 1)) + ea + (' ' * (size - idx - 1)))
+      end
     end
-    space -= 1
+    top = diamond.dup
+    diamond.pop
+    bottom = diamond.reverse
+   (top + bottom).join("\n") + "\n"
   end
-  puts diamond
-  diamond.pop
-  puts diamond.reverse
 end
-
-make_diamond('Z')

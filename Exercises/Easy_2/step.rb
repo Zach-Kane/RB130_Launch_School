@@ -9,15 +9,22 @@ ouput the value
 
 =end
 
-def step(start_value, end_value, step_value)
-  range = start_value..end_value
-  yield(start_value)
-  while start_value < end_value
-    yield(start_value += step_value)
-  end
-  range
-end
+# def step(start_value, end_value, step_value)
+#   range = start_value..end_value
+#   yield(start_value)
+#   while start_value < end_value
+#     yield(start_value += step_value)
+#   end
+#   range
+# end
 
+
+def step(start, stop, step)
+  while start <= stop
+    yield(start)
+    start += step
+  end
+end
 
 
 p step(1, 10, 3) { |value| puts "value = #{value}" }

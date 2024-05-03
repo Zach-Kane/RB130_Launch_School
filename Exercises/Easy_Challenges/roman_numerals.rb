@@ -39,81 +39,66 @@ number.size.downto(0) do |index|
 
 
 
-class RomanNumeral
-  KEY = [%w[I V], %w[X L], %w[C D], %w[M]].freeze
-
-  attr_reader :number
-
-  def initialize(number)
-    @number = number.digits
-  end
-
-  def to_roman
-    roman_numeral = []
-    number.each_with_index do |num, idx|
-      numeral = ''
-      while num > 0
-        if num == 9
-          numeral = (KEY[idx][0]) + (KEY[idx + 1][0])
-          num -= 9
-        elsif num > 5
-          numeral = (KEY[idx][0]) + numeral
-          num -= 1
-        elsif num == 5
-          numeral = KEY[idx][1] + numeral
-          num -= 5
-        elsif num == 4
-          numeral = (KEY[idx][0]) + (KEY[idx][1])
-          num -= 4
-        elsif num < 4
-          numeral = (KEY[idx][0]) + numeral
-          num -= 1
-        end
-      end
-      roman_numeral << numeral
-    end
-    p roman_numeral.reverse.join
-  end
-end
-
-
 # class RomanNumeral
+#   KEY = [%w[I V], %w[X L], %w[C D], %w[M]].freeze
+
 #   attr_reader :number
 
-#   ROMAN_NUMERALS = {
-#     "M" => 1000,
-#     "CM" => 900,
-#     "D" => 500,
-#     "CD" => 400,
-#     "C" => 100,
-#     "XC" => 90,
-#     "L" => 50,
-#     "XL" => 40,
-#     "X" => 10,
-#     "IX" => 9,
-#     "V" => 5,
-#     "IV" => 4,
-#     "I" => 1
-#   }
-
 #   def initialize(number)
-#     @number = number
+#     @number = number.digits
 #   end
 
 #   def to_roman
-#     roman_version = ''
-#     to_convert = number
-
-#     ROMAN_NUMERALS.each do |key, value|
-#       multiplier, remainder = to_convert.divmod(value)
-#       if multiplier > 0
-#         roman_version += (key * multiplier)
+#     roman_numeral = []
+#     number.each_with_index do |num, idx|
+#       numeral = ''
+#       while num > 0
+#         if num == 9
+#           numeral = (KEY[idx][0]) + (KEY[idx + 1][0])
+#           num -= 9
+#         elsif num > 5
+#           numeral = (KEY[idx][0]) + numeral
+#           num -= 1
+#         elsif num == 5
+#           numeral = KEY[idx][1] + numeral
+#           num -= 5
+#         elsif num == 4
+#           numeral = (KEY[idx][0]) + (KEY[idx][1])
+#           num -= 4
+#         elsif num < 4
+#           numeral = (KEY[idx][0]) + numeral
+#           num -= 1
+#         end
 #       end
-#       to_convert = remainder
+#       roman_numeral << numeral
 #     end
-#     p roman_version
+#     p roman_numeral.reverse.join
 #   end
 # end
+
+
+class RomanNumeral
+  attr_accessor :numeral
+
+  def initialize(number)
+    @numeral = number.digits
+  end
+
+  NUM = %w(I V X L C D M V)
+
+  def to_roman
+    idx = -2
+    numeral.map! do |num|
+      idx += 2
+      case num
+      when 1..3 then NUM[idx] * num
+      when 4 then NUM[idx] + NUM[idx + 1]
+      when 5..8 then NUM[idx + 1] + (NUM[idx] * (num - 5))
+      when 9 then NUM[idx] + NUM[idx + 2]
+      end
+    end.reverse.join
+  end
+end
 
 
 def time_it
